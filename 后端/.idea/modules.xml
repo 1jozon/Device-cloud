@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AdArticleManagement/AdArticleManagement.iml" filepath="$PROJECT_DIR$/AdArticleManagement/AdArticleManagement.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CommentNew/CommentNew.iml" filepath="$PROJECT_DIR$/CommentNew/CommentNew.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ConsumablesAnalysis/ConsumablesAnalysis.iml" filepath="$PROJECT_DIR$/ConsumablesAnalysis/ConsumablesAnalysis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FaultManagement/FaultManagement.iml" filepath="$PROJECT_DIR$/FaultManagement/FaultManagement.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GroupManagement/GroupManager.iml" filepath="$PROJECT_DIR$/GroupManagement/GroupManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LogService/LogService.iml" filepath="$PROJECT_DIR$/LogService/LogService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/QualityAnalysis/QualityAnalysis.iml" filepath="$PROJECT_DIR$/QualityAnalysis/QualityAnalysis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RMY.iml" filepath="$PROJECT_DIR$/RMY.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ReagentService/ReagentService.iml" filepath="$PROJECT_DIR$/ReagentService/ReagentService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SampleAnaysis/SampleAnaysis.iml" filepath="$PROJECT_DIR$/SampleAnaysis/SampleAnaysis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CaliStatisticalAnalysis/StatisticalAnalysis.iml" filepath="$PROJECT_DIR$/CaliStatisticalAnalysis/StatisticalAnalysis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UpgradeManagement/UpgradeManagement.iml" filepath="$PROJECT_DIR$/UpgradeManagement/UpgradeManagement.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ShiroManager/shiroManager.iml" filepath="$PROJECT_DIR$/ShiroManager/shiroManager.iml" />
+    </modules>
+  </component>
+</project>

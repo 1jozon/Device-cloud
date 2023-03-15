@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="CommentNew" />
+        <module name="StatisticalAnalysis" />
+        <module name="SampleAnaysis" />
+        <module name="FaultManagement" />
+        <module name="UpgradeManagement" />
+        <module name="ReagentService" />
+        <module name="LogService" />
+        <module name="ConsumablesAnalysis" />
+        <module name="AdArticleManagement" />
+        <module name="shiroManager" />
+        <module name="QualityAnalysis" />
+        <module name="GroupManager" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="AdArticleManagement" target="1.8" />
+      <module name="CommentNew" target="1.8" />
+      <module name="ConsumablesAnalysis" target="1.8" />
+      <module name="FaultManagement" target="1.8" />
+      <module name="GroupManager" target="1.8" />
+      <module name="LogService" target="1.8" />
+      <module name="QualityAnalysis" target="1.8" />
+      <module name="ReagentService" target="1.8" />
+      <module name="RMY" target="1.8" />
+      <module name="SampleAnaysis" target="1.8" />
+      <module name="shiroManager" target="1.8" />
+      <module name="StatisticalAnalysis" target="1.8" />
+      <module name="UpgradeManagement" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

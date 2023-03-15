@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.rmy.dao.GpsMapper">
+
+    <resultMap id="GpsInfo" type="cn.rmy.common.beans.articleGps.GpsInfo"/>
+    <parameterMap id="string" type="java.lang.String"/>
+
+    <select id="getNewestInsAddresses" resultType="java.util.List">
+
+        SELECT * FROM ins_gps where instrument_id = #{value} ORDER BY online_time DESC LIMIT 1
+
+    </select>
+
+    <select id="getOnlineTimeAddresses" resultMap="GpsInfo" resultType="java.util.Date">
+        SELECT * FROM ins_gps where online_time BETWEEN #{startOT} AND #{endOT}
+    </select>
+
+</mapper>
+

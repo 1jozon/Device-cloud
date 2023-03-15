@@ -1,0 +1,83 @@
+server:
+  port: 8093
+
+spring:
+  datasource:
+    #url: jdbc:mysql://localhost:3306/rmy?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useJDBCCompliantTimezoneShift=true&serverTimezone=UTC
+    #password: root
+    url: jdbc:mysql://rm-bp1a6r518081j0p7zuo.mysql.rds.aliyuncs.com:3306/rmy?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useJDBCCompliantTimezoneShift=true&serverTimezone=GMT%2B8
+    username: root
+    password: Rmy12345
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  rabbitmq:
+    host: 101.35.107.55
+    #host: 120.26.38.27
+    port: 5672
+    username: tjk
+    #username: rmy
+    password: 123456
+    virtual-host: /rmy
+    listener:
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    call-setters-on-nulls: false
+  mapper-locations: classpath*:dao/*.xml
+  global-config:
+    # 逻辑删除配置
+    db-config:
+      # 逻辑未删除
+      logic-not-delete-value: 0
+      # 逻辑已删除
+      logic-delete-value: 1
+
+oss:
+  # oss 上传回调地址
+  # 本地测试推荐工具 ngrok 将本地服务暴露在互联网中
+  bucket: test-rmy
+  endpoint: https://oss-cn-beijing.aliyuncs.com
+  access-id: LTAI5t6VUDRTVkWzG2Ck5hCQ
+  access-key: oSS7Ga4DlX0EuOAXQ9a6Dx2AvPmpUW
+  host: https://test-rmy.oss-cn-beijing.aliyuncs.com
+  callback-url: http://106.14.97.123/examination-admin-api/token/callback
+
+rabbit:
+  queues: rmy.queue.first,rmy.queue.send,rmy.queue.connect,rmy.queue.upgrade,rmy.queue.checkData,rmy.queue.reagentSurplus,rmy.queue.reagentMainCurve,rmy.queue.CaliData,rmy.queue.consumables,rmy.queue.fault,rmy.queue.qualityData,rmy.queue.GPSInfo,rmy.queue.ProjectInfo
+  exchange: rmyDirectExchange
+  topicbindqueue:
+    /upgrade: rmy.queue.upgrade
+    /tjk: rmy.queue.first
+    checkData: rmy.queue.checkData
+    reagentSurplus: rmy.queue.reagentSurplus
+    reagentMainCurve: rmy.queue.reagentMainCurve
+    CaliData: rmy.queue.CaliData
+    consumables: rmy.queue.consumables
+    fault: rmy.queue.fault
+    qualityData: rmy.queue.qualityData
+    GPSInfo: rmy.queue.GPSInfo
+    ProjectInfo: rmy.queue.ProjectInfo
+
+
+
+mqtt:
+  #  address: tcp://101.35.107.55:1883
+  address: tcp://120.26.38.27:1883
+  clientId: host_tjk_upg
+  userName: admin
+  password: public
+  defaultTopic: /tjk,$SYS/brokers/+/clients/+/connected,$SYS/brokers/+/clients/+/disconnected,/upgrade,checkData,reagentSurplus,reagentMainCurve,CaliData,consumables,fault,qualityData,GPSInfo,ProjectInfo
+  connectTimeOut: 3000
+
+filePath: C:\\Users\\Administrator\\OnlineProject\\RMY\\database\\

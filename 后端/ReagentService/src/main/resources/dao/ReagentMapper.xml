@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.rmy.dao.ReagentSurplusCountDao">
+    <resultMap id="RsdDto" type="cn.rmy.domain.RsdDto">
+        <result column="deviceId" property="deviceId"/>
+        <result column="reagentUseNum" property="reagentUseNum"/>
+    </resultMap>
+
+    <resultMap id="RscDto" type="cn.rmy.domain.RscDto">
+        <result column="reagentNum" property="reagentNum"/>
+        <result column="reagentUseNum" property="reagentUseNum"/>
+    </resultMap>
+
+    <select id="countForReagent01" resultMap="RsdDto">
+        select a.device_id as deviceId,sum(a.reagent_use_num) as reagentUseNum
+        FROM (select * from tb_reagentsurpluscount
+        <if  test="#{nearlyDay}.toString == '1'.toString">
+            <![CDATA[
+                 where TO_DAYS(CURDATE())-1 <= TO_DAYS(get_time)
+                ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '2'.toString">
+            <![CDATA[
+                where WEEK(CURDATE()) -1<= WEEK(get_time)
+                ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '3'.toString">
+            <![CDATA[
+                where MONTH(CURDATE()) -1 <= MONTH(get_time)
+                ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '4'.toString">
+            <![CDATA[
+                where MONTH(CURDATE()) -3 <= MONTH(get_time)
+                ]]>
+        </if>
+        ) a
+        where a.device_id in
+        <foreach collection="deviceList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY  deviceId
+        ORDER BY reagentUseNum DESC
+        limit 10
+    </select>
+
+    <select id="countForReagent02" resultMap="RsdDto">
+        select a.device_id as deviceId,sum(a.reagent_use_num) as reagentUseNum
+        FROM (select * from tb_reagentsurpluscount where get_time between #{beginTime} and #{endTime}) a
+        where a.device_id in
+        <foreach collection="deviceList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY  deviceId
+        ORDER BY reagentUseNum DESC
+        limit 10
+    </select>
+
+    <select id="countForReagent1" resultMap="RsdDto">
+        select a.device_id as deviceId,sum(a.reagent_use_num) as reagentUseNum
+        FROM (select * from tb_reagentsurpluscount where reagent_num = #{reagentNum}
+            <if  test="#{nearlyDay}.toString == '1'.toString">
+                <![CDATA[
+                and TO_DAYS(CURDATE())-1 <= TO_DAYS(get_time)
+                ]]>
+            </if>
+            <if  test="#{nearlyDay}.toString == '2'.toString">
+                <![CDATA[
+                    and WEEK(CURDATE()) -1<= WEEK(get_time)
+                    ]]>
+            </if>
+            <if  test="#{nearlyDay}.toString == '3'.toString">
+                <![CDATA[
+                    and MONTH(CURDATE()) -1 <= MONTH(get_time)
+                    ]]>
+            </if>
+            <if  test="#{nearlyDay}.toString == '4'.toString">
+                <![CDATA[
+                    and MONTH(CURDATE()) -3 <= MONTH(get_time)
+                    ]]>
+            </if>
+        ) a
+        where a.device_id in
+        <foreach collection="deviceList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY  deviceId
+        ORDER BY reagentUseNum DESC
+        limit 10
+    </select>
+
+    <select id="countForReagent2" resultMap="RsdDto">
+        select a.device_id as deviceId,sum(a.reagent_use_num) as reagentUseNum
+        FROM (select * from tb_reagentsurpluscount where reagent_num = #{reagentNum}
+            and get_time between #{beginTime} and #{endTime}) a
+        where a.device_id in
+        <foreach collection="deviceList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY  deviceId
+        ORDER BY reagentUseNum DESC
+        limit 10
+    </select>
+
+    <select id="countForReagent31" resultMap="RsdDto">
+        select a.device_id as deviceId,sum(a.reagent_use_num) as reagentUseNum
+        FROM (select * from tb_reagentsurpluscount where reagent_num = #{reagentNum} and device_id = #{deviceId}
+        <if  test="#{nearlyDay}.toString == '1'.toString">
+            <![CDATA[
+                and TO_DAYS(CURDATE())-1 <= TO_DAYS(get_time)
+                ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '2'.toString">
+            <![CDATA[
+                    and WEEK(CURDATE()) -1<= WEEK(get_time)
+                    ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '3'.toString">
+            <![CDATA[
+                    and MONTH(CURDATE()) -1 <= MONTH(get_time)
+                    ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '4'.toString">
+            <![CDATA[
+                    and MONTH(CURDATE()) -3 <= MONTH(get_time)
+                    ]]>
+        </if>
+        ) a
+        where a.device_id in
+        <foreach collection="deviceList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY  deviceId
+        ORDER BY reagentUseNum DESC
+        limit 10
+    </select>
+
+    <select id="countForReagent32" resultMap="RsdDto">
+        select a.device_id as deviceId,sum(a.reagent_use_num) as reagentUseNum
+        FROM (select * from tb_reagentsurpluscount where reagent_num = #{reagentNum} and device_id = #{deviceId}
+        and get_time between #{beginTime} and #{endTime}) a
+        where a.device_id in
+        <foreach collection="deviceList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY  deviceId
+        ORDER BY reagentUseNum DESC
+        limit 10
+    </select>
+
+
+    <select id="countForDevice1" resultMap="RscDto">
+        select a.reagent_num as reagentNum,sum(a.reagent_use_num) as reagentUseNum
+        FROM (select * from tb_reagentsurpluscount where device_id = #{deviceId}
+        <if  test="#{nearlyDay}.toString == '1'.toString">
+            <![CDATA[
+                and TO_DAYS(CURDATE())-1 <= TO_DAYS(get_time)
+                ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '2'.toString">
+            <![CDATA[
+                    and WEEK(CURDATE()) -1<= WEEK(get_time)
+                    ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '3'.toString">
+            <![CDATA[
+                    and MONTH(CURDATE()) -1 <= MONTH(get_time)
+                    ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '4'.toString">
+            <![CDATA[
+                    and MONTH(CURDATE()) -3 <= MONTH(get_time)
+                    ]]>
+        </if>
+        ) a
+        GROUP BY  reagentNum
+        ORDER BY reagentUseNum DESC
+        limit 10
+    </select>
+
+    <select id="countForDevice2" resultMap="RscDto">
+        select a.reagent_num as reagentNum,sum(a.reagent_use_num) as reagentUseNum
+        FROM (select * from tb_reagentsurpluscount where device_id = #{deviceId}
+            and get_time between #{beginTime} and #{endTime}) a
+        GROUP BY reagentNum
+        ORDER BY reagentUseNum DESC
+        limit 10
+    </select>
+
+
+
+</mapper>

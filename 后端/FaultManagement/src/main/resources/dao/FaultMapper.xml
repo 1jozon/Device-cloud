@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.rmy.dao.FaultRecordDao">
+    <!--需求1指定仪器，返回仪器统计-->
+    <resultMap id="FrdDto" type="cn.rmy.dto.FrdDto">
+        <result column="faultCode" property="faultCode"/>
+        <result column="faultCodeNum" property="faultCodeNum"/>
+    </resultMap>
+    <!--需求2指定故障，返回故障统计，并统计处理状态-->
+    <resultMap id="DrfDto" type="cn.rmy.dto.DrfDto">
+        <result column="deviceId" property="deviceId"/>
+        <result column="faultCodeNum" property="faultCodeNum"/>
+    </resultMap>
+    <select id="countForFaultCode01" resultMap="DrfDto">
+        select a.device_id as deviceId,count(a.fault_code)as faultCodeNum
+        FROM (select * from tb_fault_record
+        <if  test="#{nearlyDay}.toString == '1'.toString">
+            <![CDATA[
+                 where TO_DAYS(CURDATE())-1 <= TO_DAYS(fault_time)
+                ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '2'.toString">
+            <![CDATA[
+                   where WEEK(CURDATE()) -1<= WEEK(fault_time)
+                    ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '3'.toString">
+            <![CDATA[
+                     where MONTH(CURDATE()) -1 <= MONTH(fault_time)
+                    ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '4'.toString">
+            <![CDATA[
+                     where MONTH(CURDATE()) -3 <= MONTH(fault_time)
+                    ]]>
+        </if>
+        ) a
+        where a.device_id in
+        <foreach collection="deviceList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY  deviceId
+        ORDER BY faultCodeNum DESC
+        limit 10
+    </select>
+
+    <select id="countForFaultCode02" resultMap="DrfDto">
+        select a.device_id as deviceId,count(a.fault_code)as faultCodeNum
+        FROM (select * from tb_fault_record where fault_time between #{beginTime} and #{endTime}) a
+        where a.device_id in
+        <foreach collection="deviceList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY  deviceId
+        ORDER BY faultCodeNum DESC
+        limit 10
+    </select>
+    <select id="countForFaultCode1" resultMap="DrfDto">
+        select a.device_id as deviceId,count(a.fault_code)as faultCodeNum
+        FROM (select * from tb_fault_record where fault_code = #{faultCode}
+            <if  test="#{nearlyDay}.toString == '1'.toString">
+                <![CDATA[
+                and TO_DAYS(CURDATE())-1 <= TO_DAYS(fault_time)
+                ]]>
+            </if>
+            <if  test="#{nearlyDay}.toString == '2'.toString">
+                <![CDATA[
+                    and WEEK(CURDATE()) -1<= WEEK(fault_time)
+                    ]]>
+            </if>
+            <if  test="#{nearlyDay}.toString == '3'.toString">
+                <![CDATA[
+                    and MONTH(CURDATE()) -1 <= MONTH(fault_time)
+                    ]]>
+            </if>
+            <if  test="#{nearlyDay}.toString == '4'.toString">
+                <![CDATA[
+                    and MONTH(CURDATE()) -3 <= MONTH(fault_time)
+                    ]]>
+            </if>
+        ) a
+        where a.device_id in
+        <foreach collection="deviceList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY  deviceId
+        ORDER BY faultCodeNum DESC
+        limit 10
+    </select>
+
+    <select id="countForFaultCode2" resultMap="DrfDto">
+        select a.device_id as deviceId,count(a.fault_code)as faultCodeNum
+        FROM (select * from tb_fault_record where fault_code = #{faultCode}
+            and fault_time between #{beginTime} and #{endTime}) a
+        where a.device_id in
+        <foreach collection="deviceList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY  deviceId
+        ORDER BY faultCodeNum DESC
+        limit 10
+    </select>
+
+    <select id="countForFaultCode31" resultMap="DrfDto">
+        select a.device_id as deviceId,count(a.fault_code)as faultCodeNum
+        FROM (select * from tb_fault_record where fault_code = #{faultCode} and device_id = #{deviceId}
+        <if  test="#{nearlyDay}.toString == '1'.toString">
+            <![CDATA[
+                and TO_DAYS(CURDATE())-1 <= TO_DAYS(fault_time)
+                ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '2'.toString">
+            <![CDATA[
+                    and WEEK(CURDATE()) -1<= WEEK(fault_time)
+                    ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '3'.toString">
+            <![CDATA[
+                    and MONTH(CURDATE()) -1 <= MONTH(fault_time)
+                    ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '4'.toString">
+            <![CDATA[
+                    and MONTH(CURDATE()) -3 <= MONTH(fault_time)
+                    ]]>
+        </if>
+        ) a
+        where a.device_id in
+        <foreach collection="deviceList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY  deviceId
+        ORDER BY faultCodeNum DESC
+        limit 10
+    </select>
+
+    <select id="countForFaultCode32" resultMap="DrfDto">
+        select a.device_id as deviceId,count(a.fault_code)as faultCodeNum
+        FROM (select * from tb_fault_record where fault_code = #{faultCode} and device_id = #{deviceId}
+        and fault_time between #{beginTime} and #{endTime}) a
+        where a.device_id in
+        <foreach collection="deviceList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY  deviceId
+        ORDER BY faultCodeNum DESC
+        limit 10
+    </select>
+
+    <select id="countForDevice1" resultMap="FrdDto">
+        select a.fault_code as faultCode,count(a.fault_code) as faultCodeNum
+        FROM (select * from tb_fault_record where device_id = #{deviceId}
+        <if  test="#{nearlyDay}.toString == '1'.toString">
+            <![CDATA[
+                and TO_DAYS(CURDATE())-1 <= TO_DAYS(fault_time)
+                ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '2'.toString">
+            <![CDATA[
+                    and WEEK(CURDATE()) -1<= WEEK(fault_time)
+                    ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '3'.toString">
+            <![CDATA[
+                    and MONTH(CURDATE()) -1 <= MONTH(fault_time)
+                    ]]>
+        </if>
+        <if  test="#{nearlyDay}.toString == '4'.toString">
+            <![CDATA[
+                    and MONTH(CURDATE()) -3 <= MONTH(fault_time)
+                    ]]>
+        </if>
+        ) a
+        GROUP BY  faultCode
+        ORDER BY faultCodeNum DESC
+        limit 10
+    </select>
+
+    <select id="countForDevice2" resultMap="FrdDto">
+        select a.fault_code as faultCode,count(a.fault_code) as faultCodeNum
+        FROM (select * from tb_fault_record where device_id = #{deviceId}
+        and fault_time between #{beginTime} and #{endTime}) a
+        GROUP BY faultCode
+        ORDER BY faultCodeNum DESC
+        limit 10
+    </select>
+
+</mapper>

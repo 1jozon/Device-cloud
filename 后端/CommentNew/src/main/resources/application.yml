@@ -1,0 +1,66 @@
+
+
+spring:
+  datasource:
+    url: jdbc:mysql://rm-bp1a6r518081j0p7zuo.mysql.rds.aliyuncs.com:3306/rmy?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useJDBCCompliantTimezoneShift=true&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  servlet:
+    multipart:
+      enabled: true   #启用http上传代理
+      max-file-size: 100MB   #单个文件最大长度
+      max-request-size: 100MB   #上传文件总的最大值
+  rabbitmq:
+    host: 101.35.107.55
+    port: 5672
+    username: tjk
+    password: 123456
+    virtual-host: /rmy
+
+
+mqttAddress: tcp://101.35.107.55:1883
+
+imgPath: C:\\Users\\Administrator\\Desktop\\file
+
+
+rabbit:
+  queues: rmy.queue.first,rmy.queue.send,rmy.queue.connect,rmy.queue.upgrade,rmy.queue.checkData,rmy.queue.reagentSurplus,rmy.queue.reagentMainCurve,rmy.queue.CaliData,rmy.queue.consumables,rmy.queue.fault,rmy.queue.qualityData,rmy.queue.GPSInfo,rmy.queue.ProjectInfo
+  exchange: rmyDirectExchange
+  topicbindqueue:
+    /upgrade: rmy.queue.upgrade
+    /tjk: rmy.queue.first
+    checkData: rmy.queue.checkData
+    reagentSurplus: rmy.queue.reagentSurplus
+    reagentMainCurve: rmy.queue.reagentMainCurve
+    CaliData: rmy.queue.CaliData
+    consumables: rmy.queue.consumables
+    fault: rmy.queue.fault
+    qualityData: rmy.queue.qualityData
+    GPSInfo: rmy.queue.GPSInfo
+    ProjectInfo: rmy.queue.ProjectInfo
+
+
+mqtt:
+  #  address: tcp://101.35.107.55:1883
+  address: tcp://120.26.38.27:1883
+  clientId: host_tjk_com
+  userName: admin
+  password: public
+  defaultTopic: /tjk,$SYS/brokers/+/clients/+/connected,$SYS/brokers/+/clients/+/disconnected,/upgrade,checkData,reagentSurplus,reagentMainCurve,CaliData,consumables,fault,qualityData,GPSInfo,ProjectInfo
+  connectTimeOut: 3000
+
+filePath: C:\\Users\\Administrator\\OnlineProject\\RMY\\database\\upgradeFiles\\
+
+oss:
+  # oss 上传回调地址
+  # 本地测试推荐工具 ngrok 将本地服务暴露在互联网中
+  bucket: test-rmy
+  endpoint: https://oss-cn-beijing.aliyuncs.com
+  access-id: LTAI5t6VUDRTVkWzG2Ck5hCQ
+  access-key: oSS7Ga4DlX0EuOAXQ9a6Dx2AvPmpUW
+  host: https://test-rmy.oss-cn-beijing.aliyuncs.com
+  callback-url: http://106.14.97.123/examination-admin-api/token/callback
+
+

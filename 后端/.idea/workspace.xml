@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c559f5e1-6fb3-4c50-9531-83f91b682503" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="userSettingsFile" value="D:\maven\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="jdkForImporter" value="1.8" />
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2MDelrlYRJrffDcXi93ak4ZvqXR" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="RunManager" selected="Spring Boot.ShiroApplication">
+    <configuration name="AdArticleApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="AdArticleManagement" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.rmy.AdArticleApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CaliStatisticalApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="StatisticalAnalysis" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.rmy.CaliStatisticalApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ConsumablesAnalysis" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="ConsumablesAnalysis" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.rmy.ConsumablesAnalysis" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FaultManagementApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="FaultManagement" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.rmy.FaultManagementApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GroupManagerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="GroupManager" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.rmy.GroupManagerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LogServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="LogService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.rmy.LogServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="QualityAnalysis" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="QualityAnalysis" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.rmy.QualityAnalysis" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ReagentServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="ReagentService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.rmy.ReagentServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SampleAnalysis" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="SampleAnaysis" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.rmy.SampleAnalysis" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShiroApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shiroManager" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.rmy.ShiroApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UpgradeManagementApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="UpgradeManagement" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.rmy.UpgradeManagementApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c559f5e1-6fb3-4c50-9531-83f91b682503" name="Default Changelist" comment="" />
+      <created>1677306734154</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1677306734154</updated>
+      <workItem from="1677306738837" duration="1463000" />
+      <workItem from="1677590229815" duration="1019000" />
+      <workItem from="1678102208571" duration="4168000" />
+      <workItem from="1678188174639" duration="8681000" />
+      <workItem from="1678415513079" duration="3164000" />
+      <workItem from="1678608139094" duration="825000" />
+      <workItem from="1678623602360" duration="1445000" />
+      <workItem from="1678798249858" duration="75000" />
+      <workItem from="1678806590033" duration="169000" />
+      <workItem from="1678868609396" duration="1628000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="427" y="215" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1678198714409">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="427" y="215" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1678198714409" />
+    <state x="549" y="111" key="FileChooserDialogImpl" timestamp="1678798314698">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="111" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1678798314698" />
+    <state x="408" y="110" key="NewModule_or_Project.wizard" timestamp="1678609770879">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="408" y="110" key="NewModule_or_Project.wizard/0.0.1536.824@0.0.1536.824" timestamp="1678609770879" />
+    <state x="270" y="54" key="SettingsEditor" timestamp="1678608262158">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="270" y="54" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1678608262158" />
+    <state x="449" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1678798250452">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="449" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1678798250452" />
+    <state x="178" y="22" key="new project wizard" timestamp="1678798323438">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="178" y="22" key="new project wizard/0.0.1536.824@0.0.1536.824" timestamp="1678798323438" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1678415765484">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1678415765484" />
+  </component>
+</project>

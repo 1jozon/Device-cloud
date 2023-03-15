@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.rmy.dao.QualityMapper">
+    <resultMap id="qualityAnalysisInsDto" type="cn.rmy.common.pojo.dto.QualityAnalysisInsDto">
+        <result column="insId" property="insId"/>
+        <result column="projectName" property="projectName"/>
+        <result column="proCount" property="proCount"/>
+        <result column="exceptionCount" property="exceptionCount"/>
+    </resultMap>
+
+    <resultMap id="qualityAnalysisPorDto" type="cn.rmy.common.pojo.dto.QualityAnalysisProjectDto">
+        <result column="insModel" property="insModel"/>
+        <result column="projectName" property="projectName"/>
+        <result column="insModelCount" property="insModelCount"/>
+        <result column="exceptionCount" property="exceptionCount"/>
+    </resultMap>
+
+    <select id="getAllInsAnalysis" resultMap="qualityAnalysisInsDto">
+        select a.ins_id as insId, b.project_name as projectName, count(*) as proCount,
+               Sum(a.exception) as exceptionCount
+        from quality_analysis as a, tb_project as b
+        where a.project_id=b.project_id
+          and a.ins_id in
+        <foreach collection="insList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by projectName
+        order by proCount DESC
+        limit 10
+    </select>
+
+    <select id="getAllTimeInsAnalysis" resultMap="qualityAnalysisInsDto">
+        select a.ins_id as insId, b.project_name as projectName, count(*) as proCount,
+        Sum(a.exception) as exceptionCount
+        from quality_analysis as a, tb_project as b
+        where a.project_id=b.project_id
+        and a.qctrl_time between #{startTime} and #{endTime}
+        and a.ins_id in
+        <foreach collection="insList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by projectName
+        order by proCount DESC
+        limit 10
+    </select>
+
+    <select id="getInsAnalysis" resultMap="qualityAnalysisInsDto">
+        select a.ins_id as insId, b.project_name as projectName, count(*) as proCount,
+        Sum(a.exception) as exceptionCount
+        from quality_analysis as a, tb_project as b
+        where a.project_id=b.project_id
+        and a.ins_id=#{sinInsId}
+        group by projectName
+        order by proCount DESC
+        limit 10
+    </select>
+
+    <select id="getTimeInsAnalysis" resultMap="qualityAnalysisInsDto">
+        select a.ins_id as insId, b.project_name as projectName, count(*) as proCount,
+               Sum(a.exception) as exceptionCount
+        from quality_analysis as a, tb_project as b
+        where a.project_id=b.project_id
+          and a.ins_id=#{sinInsId}
+          and a.qctrl_time between #{startTime} and #{endTime}
+        group by projectName
+        order by proCount DESC
+            limit 10
+    </select>
+
+
+    <!--项目-->
+    <!--得到指定项目-指定仪器-指定时间 分析 -->
+    <select id="getProInsTimeAnalysis" resultMap="qualityAnalysisPorDto">
+        select a.project_name as projectName, b.instrument_model as insModel
+             ,count(b.instrument_model) as insModelCount
+             ,sum(a.exception) as exceptionCount
+        from quality_analysis as a inner join tb_instrument as b
+            on a.ins_id=b.instrument_id
+            and a.project_name=#{projectName}
+            and a.ins_id=#{sinInsId}
+            and a.qctrl_time between #{startTime} and #{endTime}
+        group by insModel
+        order by insModelCount DESC
+    </select>
+
+    <!--得到 指定项目-指定仪器-所有时间 分析-->
+    <select id="getProInsAnalysis" resultMap="qualityAnalysisPorDto">
+        select a.project_name as projectName, b.instrument_model as insModel
+        ,count(b.instrument_model) as insModelCount
+        ,sum(a.exception) as exceptionCount
+        from quality_analysis as a inner join tb_instrument as b
+            on a.ins_id=b.instrument_id
+            and a.project_name=#{projectName}
+            and a.ins_id=#{sinInsId}
+        group by insModel
+        order by insModelCount DESC
+    </select>
+
+    <!--得到 指定项目-所有仪器-所有时间 分析-->
+    <select id="getProAnalysis" resultMap="qualityAnalysisPorDto">
+        select a.project_name as projectName, b.instrument_model as insModel
+             ,count(b.instrument_model) as insModelCount
+             ,sum(a.exception) as exceptionCount
+        from quality_analysis as a inner join tb_instrument as b
+            on a.ins_id=b.instrument_id
+                   and a.project_name=#{projectName}
+        where a.ins_id in
+        <foreach collection="insList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by insModel
+        order by insModelCount DESC
+    </select>
+
+    <!--得到 指定项目-指定仪器-指定时间 分析-->
+    <select id="getProTimeAnalysis" resultMap="qualityAnalysisPorDto">
+        select a.project_name as projectName, b.instrument_model as insModel
+        ,count(b.instrument_model) as insModelCount
+        ,sum(a.exception) as exceptionCount
+        from quality_analysis as a inner join tb_instrument as b
+        on a.ins_id=b.instrument_id
+        and a.project_name=#{projectName}
+        and a.qctrl_time between #{startTime} and #{endTime}
+        where a.ins_id in
+        <foreach collection="insList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by insModel
+        order by insModelCount DESC
+    </select>
+
+</mapper>

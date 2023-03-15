@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.rmy.dao.UsersInfoMapper">
+    <resultMap id="userInfo" type="cn.rmy.common.beans.shiroUsers.UserInfo"></resultMap>
+
+    <select id="exportRegisteGetByCondition" resultMap="userInfo">
+        select * from tb_user as a
+        where a.role_id = #{roleId}
+          and a.regist_status = 1
+        and a.deleted = 0
+    </select>
+
+    <select id="exportGetByCondition" resultMap="userInfo">
+    select * from tb_user as a, user_role as b
+    where b.role_id = #{roleId}
+      and b.deleted = 0
+      and b.user_id = a.user_id
+      and a.deleted = 0
+</select>
+
+</mapper>
+

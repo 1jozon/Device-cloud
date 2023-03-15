@@ -1,0 +1,87 @@
+spring:
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+  rabbitmq:
+    #    host: 101.35.107.55
+    host: 120.26.38.27
+    port: 5672
+    #    username: tjk
+    username: rmy
+    password: 123456
+    listener:
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3
+  #    virtual-host: /rmy
+  redis:
+    #服务器连接端口
+    host: 121.40.104.60
+    port: 6379
+    #连接密码（默认为空）
+    password: rmy12345
+
+
+dbNames: rmy
+dbFilePath: C:\\Users\\Administrator\\Desktop\\file\\db\\
+hostIp: 127.0.0.1
+resource: C:\\Users\\Administrator\\Desktop\\file\\
+imgPath: C:\\Users\\Administrator\\Desktop\\file\\pic\\
+filePath: /home/rmy/downLoadFile
+#filePath: C:\Users\chu\Desktop\file
+effectiveDuration: 30
+#路径最后的双斜杠一定不能丢
+
+mqtt:
+  #  address: tcp://101.35.107.55:1883
+  address: tcp://120.26.38.27:1883
+  clientId: host_2394
+  userName: admin
+  password: public
+  defaultTopic: /tjk,$SYS/brokers/+/clients/+/connected,$SYS/brokers/+/clients/+/disconnected,/upgrade,$share/g1/checkData,$share/g1/reagentSurplus,$share/g1/reagentMainCurve,$share/g1/CaliData,$share/g1/consumables,$share/g1/fault,$share/g1/qualityData,$share/g1/GPSInfo,articlePush,$share/g1/ProjectInfo
+  connectTimeOut: 3000
+
+oss:
+  # oss 上传回调地址
+  # 本地测试推荐工具 ngrok 将本地服务暴露在互联网中
+  bucket: test-rmy
+  endpoint: https://oss-cn-beijing.aliyuncs.com
+  access-id: LTAI5t6VUDRTVkWzg1Ck5hCQ
+  access-key: oSS7Ga4DlX0EuOAXQ9a6Dx2AvPmpUW
+  host: https://test-rmy.oss-cn-beijing.aliyuncs.com
+  callback-url: http://106.14.97.123/examination-admin-api/token/callback
+
+rabbit:
+  queues: rmy.queue.first,rmy.queue.send,rmy.queue.connect,rmy.queue.upgrade,rmy.queue.$share/g2/checkData,rmy.queue.$share/g2/reagentSurplus,rmy.queue.$share/g2/reagentMainCurve,rmy.queue.$share/g2/CaliData,rmy.queue.$share/g2/consumables,rmy.queue.$share/g2/fault,rmy.queue.$share/g2/qualityData,rmy.queue.$share/g2/GPSInfo,rmy.queue.$share/g2/ProjectInfo
+  exchange: rmyDirectExchange
+  topicbindqueue:
+    /upgrade: rmy.queue.upgrade
+    /tjk: rmy.queue.first
+    checkData: rmy.queue.$share/g2/checkData
+    reagentSurplus: rmy.queue.$share/g2/reagentSurplus
+    reagentMainCurve: rmy.queue.$share/g2/reagentMainCurve
+    CaliData: rmy.queue.$share/g2/CaliData
+    consumables: rmy.queue.$share/g2/consumables
+    fault: rmy.queue.$share/g2/fault
+    qualityData: rmy.queue.$share/g3/qualityData
+    GPSInfo: rmy.queue.$share/g2/GPSInfo
+    ProjectInfo: rmy.queue.$share/g2/ProjectInfo
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    call-setters-on-nulls: false
+  mapper-locations: classpath*:dao/*.xml
+  global-config:
+    # 逻辑删除配置
+    db-config:
+      # 逻辑未删除
+      logic-not-delete-value: 0
+      # 逻辑已删除
+      logic-delete-value: 1

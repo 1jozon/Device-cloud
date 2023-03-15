@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.rmy.dao.ProjectMapper">
+    <resultMap id="projectSumUsedDto" type="cn.rmy.common.pojo.dto.ProjectSumUsedDto">
+        <result column="projectName" property="projectName"/>
+        <result column="usedNumber" property="usedNumber"/>
+    </resultMap>
+
+    <select id="getProjectSumUsed" resultMap="projectSumUsedDto">
+        select b.project_name as projectName, sum(a.reagent_use_num) as usedNumber
+        from tb_reagentsurpluscount as a, tb_project as b
+        where a.device_id = #{insId}
+            and a.reagent_num = b.project_id
+        group by a.reagent_num
+        order by usedNumber DESC
+    </select>
+
+
+</mapper>

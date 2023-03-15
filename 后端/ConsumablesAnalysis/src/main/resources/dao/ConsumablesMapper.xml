@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.rmy.dao.ConsumablesMapper">
+    <resultMap id="conAnalysisDto" type="cn.rmy.common.dto.ConAnalysisDto">
+        <result column="objectName" property="objectName"/>
+        <result column="amount" property="amount"/>
+    </resultMap>
+
+    <!--根据仪器-->
+    <select id="conGetAllAnalysis" resultMap="conAnalysisDto">
+        select a.con_name as objectName, sum(a.vol_used) as amount
+        from consumables_data as a
+        where a.solid_state=#{solidState}
+        and a.ins_id in
+        <foreach collection="insList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by objectName
+        order by amount DESC
+    </select>
+
+    <select id="conGetAllTimeAnalysis" resultMap="conAnalysisDto">
+        select a.con_name as objectName, sum(a.vol_used) as amount
+        from consumables_data as a
+        where a.solid_state=#{solidState}
+        and a.ins_id in
+        <foreach collection="insList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and a.update_time between #{startTime} and #{endTime}
+        group by objectName
+        order by amount DESC
+    </select>
+
+
+    <!--指定耗材-->
+    <select id="conGetConAnalysis" resultMap="conAnalysisDto">
+        select a.ins_id as objectName, sum(a.vol_used) as amount
+        from consumables_data as a
+        where a.con_name=#{conName}
+          and a.ins_id in
+          <foreach collection="insList" index="index" item="item" open="(" separator="," close=")">
+              #{item}
+          </foreach>
+        group by objectName
+        order by amount DESC
+    </select>
+
+    <select id="conGetConTimeAnalysis" resultMap="conAnalysisDto">
+        select a.ins_id as objectName, sum(a.vol_used) as amount
+        from consumables_data as a
+        where a.con_name=#{conName}
+        and a.ins_id in
+        <foreach collection="insList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and a.update_time between #{startTime} and #{endTime}
+        group by objectName
+        order by amount DESC
+    </select>
+</mapper>

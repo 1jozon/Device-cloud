@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.rmy.dao.SampleMapper">
+
+    <resultMap id="sampleAnalysis" type="cn.rmy.common.dto.SampleAnalysisDto" >
+        <result column="object" property="object"/>
+        <result column="num1" property="number"/>
+        <result column="num2" property="secondNum"/>
+    </resultMap>
+
+    <!--所有仪器-仪器分类-无时间-->
+    <select id="getSampleAnaInsAll" resultMap="sampleAnalysis">
+        select a.instrument_id as object,
+               count(*) as num1,
+               sum(case when a.exception then 1 else 0 end) as num2
+        from tb_check as a
+        where a.instrument_id in
+        <foreach collection="insList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and a.deleted=0
+        group by object
+        order by num1 DESC
+    </select>
+
+    <!--所有仪器-仪器分类-有时间-->
+    <select id="getSampleAnaInsTime" resultMap="sampleAnalysis">
+        select a.instrument_id as object,
+        count(*) as num1,
+        sum(case when a.exception then 1 else 0 end) as num2
+        from tb_check as a
+        where a.instrument_id in
+        <foreach collection="insList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and a.check_time between #{startTime} and #{endTime}
+        and a.deleted=0
+        group by object
+        order by num1 DESC
+    </select>
+
+
+    <!--所有仪器-所有时间-项目分类-->
+    <select id="getSampleAnaProAllIns" resultMap="sampleAnalysis">
+        select b.project_name as object,
+        count(*) as num1,
+        sum(case when a.exception then 1 else 0 end) as num2
+        from tb_check as a, tb_project as b
+        where a.instrument_id in
+        <foreach collection="insList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and a.deleted=0
+        and a.project_id = b.project_id
+        group by object
+        order by num1 DESC
+    </select>
+
+    <!--所有仪器-指定时间-项目分类-->
+    <select id="getSampleAnaProAllInsTime" resultMap="sampleAnalysis">
+        select b.project_name as object,
+        count(*) as num1,
+        sum(case when a.exception then 1 else 0 end) as num2
+        from tb_check as a, tb_project as b
+        where a.instrument_id in
+        <foreach collection="insList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and a.deleted=0
+        and a.project_id = b.project_id
+        and a.check_time between #{startTime} and #{endTime}
+        group by object
+        order by num1 DESC
+    </select>
+
+    <!--指定仪器-所有时间-项目分类-->
+    <select id="getSampleAnaProSinIns" resultMap="sampleAnalysis">
+        select b.project_name as object,
+        count(*) as num1,
+        sum(case when a.exception then 1 else 0 end) as num2
+        from tb_check as a, tb_project as b
+        where a.instrument_id = #{insId}
+        and a.deleted=0
+        and a.project_id = b.project_id
+        group by object
+        order by num1 DESC
+    </select>
+
+    <!--指定仪器-指定时间-项目分类-->
+    <select id="getSampleAnaProSinInsTime" resultMap="sampleAnalysis">
+        select b.project_name as object,
+        count(*) as num1,
+        sum(case when a.exception then 1 else 0 end) as num2
+        from tb_check as a, tb_project as b
+        where a.instrument_id = #{insId}
+        and a.deleted=0
+        and a.project_id = b.project_id
+        and a.check_time between #{startTime} and #{endTime}
+        group by object
+        order by num1 DESC
+    </select>
+
+
+    <!--分年龄段统计-指定项目名称-指定仪器-时间-无异常-->
+    <select id="getSampleAnaAgeSinIns" resultMap="sampleAnalysis">
+        SELECT info.agegroup AS object, COUNT(*) as num1, SUM(case WHEN info.sex=1 THEN 1 ELSE 0 END) as num2
+
+        FROM(select a.instrument_id as ins_id, a.patient_sex as sex, a.exception as exception, a.project_id As project_id,
+		    case
+			    when a.patient_age>=0 and 6>=a.patient_age then '婴儿'
+			    when a.patient_age>=7 and 12>=a.patient_age then '少年'
+			    when a.patient_age>=13 and 17>=a.patient_age then '青少年'
+			    when a.patient_age>=18 and 45>=a.patient_age then '青年'
+			    when a.patient_age>=46 and 69>=a.patient_age then '中年'
+			    when a.patient_age>=70 then '老年' else '其他' end
+			    as agegroup, a.check_time as check_time
+            FROM tb_check as a
+            where a.deleted=0) as info, tb_project as pro
+        where info.project_id=pro.project_id
+          and info.project_id=#{projectId}
+          and info.ins_id=#{insId}
+          and info.exception = ""
+          and case
+            when #{startTime} is not null and #{endTime} is not null
+                then (info.check_time between #{startTime} and #{endTime}) else (1=1) end
+        GROUP BY info.agegroup
+        order by num1 DESC
+    </select>
+
+    <!--分年龄段统计-指定项目名称-指定仪器-时间-有异常-->
+    <select id="getSampleAnaAgeSinInsExp" resultMap="sampleAnalysis">
+        SELECT info.agegroup AS object, COUNT(*) as num1, SUM(case WHEN info.sex=1 THEN 1 ELSE 0 END) as num2
+
+        FROM(select a.instrument_id as ins_id, a.patient_sex as sex, a.exception as exception, a.project_id As project_id,
+		    case
+			    when a.patient_age>=0 and 6>=a.patient_age then '婴儿'
+			    when a.patient_age>=7 and 12>=a.patient_age then '少年'
+			    when a.patient_age>=13 and 17>=a.patient_age then '青少年'
+			    when a.patient_age>=18 and 45>=a.patient_age then '青年'
+			    when a.patient_age>=46 and 69>=a.patient_age then '中年'
+			    when a.patient_age>=70 then '老年' else '其他' end
+			    as agegroup, a.check_time as check_time
+             FROM tb_check as a
+             where a.deleted=0) as info, tb_project as pro
+        where info.project_id=pro.project_id
+          and info.project_id=#{projectId}
+          and info.ins_id=#{insId}
+          and info.exception &lt;&gt; ""
+          and case
+                  when #{startTime} is not null and #{endTime} is not null
+                      then (info.check_time between #{startTime} and #{endTime}) else (1=1) end
+        GROUP BY info.agegroup
+        order by num1 DESC
+    </select>
+
+    <!--分年龄段统计-指定项目名称-所有仪器-时间-无异常-->
+    <select id="getSampleAnaAgeAllIns" resultMap="sampleAnalysis">
+        SELECT info.agegroup AS object, COUNT(*) as num1, SUM(case WHEN info.sex=1 THEN 1 ELSE 0 END) as num2
+
+        FROM(select a.instrument_id as ins_id, a.patient_sex as sex, a.exception as exception, a.project_id As project_id,
+		    case
+			    when a.patient_age>=0 and 6>=a.patient_age then '婴儿'
+			    when a.patient_age>=7 and 12>=a.patient_age then '少年'
+			    when a.patient_age>=13 and 17>=a.patient_age then '青少年'
+			    when a.patient_age>=18 and 45>=a.patient_age then '青年'
+			    when a.patient_age>=46 and 69>=a.patient_age then '中年'
+			    when a.patient_age>=70 then '老年' else '其他' end
+			    as agegroup, a.check_time as check_time
+             FROM tb_check as a
+            where a.deleted=0) as info, tb_project as pro
+        where info.project_id=pro.project_id
+          and info.project_id=#{projectId}
+          and exception = ""
+          and info.ins_id in
+            <foreach collection="insList" index="index" item="item" open="(" separator="," close=")">
+               #{item}
+            </foreach>
+          and case
+            when #{startTime} is not null and #{endTime} is not null
+                then (info.check_time between #{startTime} and #{endTime}) else (1=1) end
+        GROUP BY info.agegroup
+        order by num1 DESC
+    </select>
+
+    <!--分年龄段统计-指定项目名称-所有仪器-时间-有异常-->
+    <select id="getSampleAnaAgeAllInsExp" resultMap="sampleAnalysis">
+        SELECT info.agegroup AS object, COUNT(*) as num1, SUM(case WHEN info.sex=1 THEN 1 ELSE 0 END) as num2
+
+        FROM(select a.instrument_id as ins_id, a.patient_sex as sex, a.exception as exception, a.project_id As project_id,
+            case
+            when a.patient_age>=0 and 6>=a.patient_age then '婴儿'
+            when a.patient_age>=7 and 12>=a.patient_age then '少年'
+            when a.patient_age>=13 and 17>=a.patient_age then '青少年'
+            when a.patient_age>=18 and 45>=a.patient_age then '青年'
+            when a.patient_age>=46 and 69>=a.patient_age then '中年'
+            when a.patient_age>=70 then '老年' else '其他' end
+            as agegroup, a.check_time as check_time
+            FROM tb_check as a
+            where a.deleted=0) as info, tb_project as pro
+        where info.project_id=pro.project_id
+            and info.project_id=#{projectId}
+            and exception &lt;&gt; ""
+            and info.ins_id in
+            <foreach collection="insList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+            and case
+            when #{startTime} is not null and #{endTime} is not null
+                then (info.check_time between #{startTime} and #{endTime}) else (1=1) end
+        GROUP BY info.agegroup
+        order by num1 DESC
+    </select>
+
+    <!--分年龄段统计-指定项目名称-所有仪器-所有时间-异常-->
+
+    <!--分年龄段统计-指定项目名称-所有仪器-指定时间-->
+
+    <!--分年龄段统计-指定项目名称-所有仪器-指定时间-异常-->
+
+    <!--分年龄段统计-指定项目名称-指定仪器-所有时间-->
+
+    <!--分年龄段统计-指定项目名称-指定仪器-所有时间-异常-->
+
+    <!--分年龄段统计-指定项目名称-指定仪器-指定时间-->
+
+    <!--分年龄段统计-指定项目名称-指定仪器-指定时间-异常-->
+
+
+
+
+</mapper>
+
